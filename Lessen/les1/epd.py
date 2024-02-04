@@ -1,4 +1,4 @@
-from kamer import Kamer
+from .kamer import Kamer
 
 
 class Epd(object):

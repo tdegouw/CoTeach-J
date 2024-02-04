@@ -1,14 +1,16 @@
-from epd import Epd
+from les1.epd import Epd
+from les1.bestandslader import Bestandslader
 
 
 def laad_kamers(epd: Epd):
     print("Start met laden van de kamers")
-    file = open("bestanden/kamerlijst.csv", "r")
-    # Iedere regel is <kamernummer>,<Kamernaam>
-    for line in file:
-        kamernummer, naam = line.strip().split(',')
-        print("** Bezig met inladen kamer {} - {}".format(kamernummer, naam))
-        epd.maak_kamer(kamernummer=kamernummer, naam= naam)
+    lader = Bestandslader('kamerlijst.csv')
+    regel = lader.geef_regel()
+    while regel is not None:
+        print(regel)
+        epd.maak_kamer(kamernummer=regel['ID'], naam=regel['naam'])
+        regel = lader.geef_regel()
+
     print("Kamers geladen: {}".format(epd.geef_kamertotaal()))
 
 def laad_patienten(epd: Epd):
