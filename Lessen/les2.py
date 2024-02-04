@@ -1,4 +1,5 @@
 from modules.les1.epd import Epd
+from modules.les2.epd_gui import EpdGui
 from modules.les1.bestandslader import Bestandslader
 
 
@@ -21,9 +22,10 @@ def laad_patienten(epd: Epd):
 
 
 def start_epd():
-    mijn_epd = Epd(ziekenhuis='Mijn ziekenhuis')
+    mijn_epd = EpdGui(ziekenhuis='Mijn ziekenhuis')
     laad_kamers(epd=mijn_epd)
     laad_patienten(epd=mijn_epd)
+    mijn_epd.draw()
 
 
 if __name__ == "__main__":
