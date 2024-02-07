@@ -35,7 +35,8 @@ def draw():
     robot.draw()
 
 def update():
-    #robot.wissel_plaatje_reset()
     pass
 
 
+def on_mouse_down(pos, button):
+    pass

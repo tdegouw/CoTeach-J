@@ -22,3 +22,6 @@ def draw():
 
 def update():
     pass
+
+def on_mouse_down(pos, button):
+    pass

@@ -1,5 +1,5 @@
 WIDTH = 1024
-HEIGHT = 768
+HEIGHT = 480
 
 male = Actor('male_idle')
 female = Actor('female_idle')
@@ -19,14 +19,22 @@ class Character(Actor):
 
     def geef_plaatje(self):
         if self.moving:
-            self.step = self.step + 1
-            if self.step > 7:
-                self.step = 0
             return self.character_type + '_walk_' + str(self.step)
         return self.character_type + '_idle'
 
+    def neem_stap(self):
+        self.step = self.step + 1
+        if self.step > 7:
+            self.step = 0
+        # Zijn we nog aan het lopen? Neem dan over een seconde nog een stap
+        if self.moving:
+            clock.schedule_unique(self.neem_stap, 0.1)
+
     def wissel_lopen(self):
         self.moving = not self.moving
+        if self.moving:
+            self.neem_stap()
+
 
     def draw(self):
         self.image = self.geef_plaatje()
@@ -45,7 +53,6 @@ def update():
     pass
 
 def on_mouse_down(pos, button):
-    global score
     if button == mouse.LEFT and robot.collidepoint(pos):
         robot.wissel_lopen()
 
