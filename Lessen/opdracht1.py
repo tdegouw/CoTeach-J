@@ -27,7 +27,6 @@ def draw():
     robot.draw()
 
 def update():
-    # Deze functie wordt iedere
     pass
 
 def on_mouse_down(pos, button):
