@@ -1,13 +1,17 @@
 WIDTH = 512
 HEIGHT = 256
 
-# Opdracht: Je ziet dat de robot hard rent als je iedere update een
+# Opdracht: attributen manipuleren
+#
+# Je ziet dat de robot hard rent als je iedere update een
 # stap zet. Probeer het eens door gebruik te maken van asynchroniteit
 # in de code, in dit geval door gebruik te maken van de clock / scheduler
 #
 # https://pygame-zero.readthedocs.io/en/stable/builtins.html#clock
 #
-# Doel van de opdracht: Begrijpen dat er naast de standaard loop en method calls
+# Doel van de opdracht:
+#
+# Begrijpen dat er naast de standaard loop en method calls
 # ook andere mogelijkheden zijn om de program flow aan te passen. (Asynchroniteit)
 
 class Robot(Actor):

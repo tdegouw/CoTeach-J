@@ -23,10 +23,12 @@ robot = Robot('robot_idle')
 robot.pos = 100, 56
 
 def draw():
+    # Draw wordt iedere keer dat het scherm getekend moet worden aangeroepen
     screen.fill((255, 255, 255))
     robot.draw()
 
 def update():
+    # Update wordt iedere keer dat het scherm weergegeven wordt aangeroepen
     pass
 
 def on_mouse_down(pos, button):

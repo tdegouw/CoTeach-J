@@ -1,7 +1,7 @@
 WIDTH = 512
 HEIGHT = 256
 
-# Opdracht:
+# Opdracht: gedrag toevoegen
 #
 # De robot loopt nu wel, maar hij beweegt nog niet over het scherm.
 # Kijk eens of je de robot willekeurig over het scherm kunt laten bewegen

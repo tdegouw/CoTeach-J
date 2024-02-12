@@ -1,7 +1,9 @@
 WIDTH = 512
 HEIGHT = 256
 
-# Opdracht: Kijk of het lukt om het plaatje te laten wisselen
+# Opdracht: Overerven en state aanpassen
+#
+# Kijk of het lukt om het plaatje te laten wisselen
 # om de robot te laten lopen. Er zijn 7 plaatjes robot_walk_0 t/m robot_walk_7
 # die je daarvoor kunt gebruiken.
 #

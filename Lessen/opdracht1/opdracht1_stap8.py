@@ -4,6 +4,18 @@ import time
 WIDTH = 1024
 HEIGHT = 480
 
+# Eindopdracht:
+#
+# En om het wat moeilijker te maken willen we graag ook een horde aan
+# avonturiers. De opdracht is om alle monsters op het scherm zo snel mogelijk
+# weg te klikken voordat alle avonturiers weggeklikt zijn (per ongeluk).
+#
+# Kijk wat je nog kunt doen om het rondlopen extra complex te maken, maak
+# de game lastig!
+#
+# Doel van de opdracht: Alles samenvoegen en een game maken
+
+
 class Monster(Actor):
 
     def __init__(self, x: int, y: int):
@@ -70,6 +82,7 @@ class Monster(Actor):
         else:
             self.y = self.y + pixels
 
+
 class Zombie(Monster):
 
     def ga_een_kant_op(self, pixels: int):
@@ -114,6 +127,8 @@ class Robot(Monster):
             self.x = random.randint(50, WIDTH - 50)
             self.y = random.randint(50, HEIGHT - 50)
 
+
+
     def geef_plaatje(self):
         if self.is_kapot:
             return 'robot_hurt'
@@ -121,111 +136,71 @@ class Robot(Monster):
             return 'robot_walk_' + str(self.step)
         return 'robot_idle'
 
-class Avonturier(Monster):
-
-    def ga_een_kant_op(self, pixels: int):
-        # Als we kapot zijn doen we niets als Avonturier
-        if self.is_kapot:
-            return
-        # Willekeurig omhoog(1), omlaag(2), links(3) of rechts(4), Nietsdoen (5)
-        richting = random.randint(1, 5)
-        # Controleer welke richting is gekozen
-        if richting == 1:
-            self.ga_omhoog(pixels)
-        elif richting == 2:
-            self.ga_omlaag(pixels)
-        elif richting == 3:
-            self.ga_links(pixels)
-        elif richting == 4:
-            self.ga_rechts(pixels)
-
-    def geef_plaatje(self):
-        if self.is_kapot:
-            return 'adventurer_hurt'
-        if self.is_lopende:
-            return 'adventurer_walk_' + str(self.step)
-        return'adventurer_idle'
-
 
 class Horde:
+    def __init__(self, aantal_robots: int, aantal_zombies: int):
+        self.monsters = list()
+        for i in range(1, aantal_robots, 1):
+            self.monsters.append(Robot(i * 150, 56))
+        for i in range(1, aantal_zombies, 1):
+            self.monsters.append(Zombie(i * 150, 250))
 
     def start(self):
-        for monster in self.items:
+        for monster in self.monsters:
             monster.start_lopen()
 
     def draw(self):
-        for monster in self.items:
+        for monster in self.monsters:
             monster.draw()
 
     def check_hit(self, pos):
-        for monster in self.items:
+        for monster in self.monsters:
             if (monster.collidepoint(pos)):
                 monster.is_kapot = True
 
-    def is_alles_kapot(self):
-        return all(monster.is_kapot for monster in self.items)
+    # class method
+    def is_kapot(self):
+        return all(monster.is_kapot for monster in self.monsters)
 
-class HordeMonsters(Horde):
-    def __init__(self, aantal_robots: int, aantal_zombies: int):
-        self.items = list()
-        for i in range(1, aantal_robots, 1):
-            self.items.append(Robot(random.randint(1, WIDTH), random.randint(1, HEIGHT)))
-        for i in range(1, aantal_zombies, 1):
-            self.items.append(Zombie(random.randint(1, WIDTH), random.randint(1, HEIGHT)))
+# globale functie
+def is_kapot(self):
+    return all(monster.is_kapot for monster in horde.monsters)
 
-class HordeAvonturiers(Horde):
-    def __init__(self, aantal_avonturiers: int):
-        self.items = list()
-        for i in range(1, aantal_avonturiers, 1):
-            self.items.append(Avonturier(random.randint(1, WIDTH), random.randint(1, HEIGHT)))
+def decide_movement(movement_algorithm):
+    def wrapper(monster, target_x, target_y):
+        return movement_algorithm(monster, target_x, target_y)
+    return wrapper
 
 
 start_tijd = time.time()
-monsters = HordeMonsters(aantal_robots= 5, aantal_zombies= 5)
-monsters.start()
-
-avonturiers = HordeAvonturiers(aantal_avonturiers= 10)
-avonturiers.start()
+horde = Horde(aantal_robots=5, aantal_zombies=5)
+horde.start()
 
 definitieve_tijd = 0
-wacht_tijd = 2
 
 def draw():
     global definitieve_tijd
-
     huidige_tijd = time.time()
-    verlopen_tijd = (huidige_tijd - start_tijd - wacht_tijd)
-
-    if(verlopen_tijd < 0 ):
+    verlopen_tijd = (huidige_tijd - start_tijd)
+    # Als alles kapot is,
+    if is_kapot(horde):
+        if definitieve_tijd == 0:
+            definitieve_tijd = verlopen_tijd
         screen.fill((0, 0, 0))
-        screen.draw.text("Maak je klaar!" , midtop=(WIDTH / 2, HEIGHT / 4), color="green", fontsize=60)
-        bericht = "{:.2f}".format(abs(verlopen_tijd))
-        screen.draw.text(bericht , midtop=(WIDTH / 2, HEIGHT / 2), color="green", fontsize=120)
-
-    elif monsters.is_alles_kapot():
-        if definitieve_tijd == 0:
-            definitieve_tijd = verlopen_tijd
-        screen.fill((0, 255, 0))
-        bericht = "Gewonnen in {:.2f} seconden".format(definitieve_tijd)
-        screen.draw.text(bericht , midtop=(WIDTH / 2, HEIGHT / 2), color="black", fontsize=60)
-    elif avonturiers.is_alles_kapot():
-        if definitieve_tijd == 0:
-            definitieve_tijd = verlopen_tijd
-        screen.fill((255, 0, 0))
-        bericht = "Oh oh, Verloren! \n\n Tijd: {:.2f} seconden".format(definitieve_tijd)
-        screen.draw.text(bericht , midtop=(WIDTH / 2, HEIGHT / 3), color="black", fontsize=60)
+        win_bericht = "Horde verslagen in {:.2f} seconden".format(definitieve_tijd)
+        screen.draw.text(win_bericht , midtop=(WIDTH / 2, HEIGHT / 2), color="orange", fontsize=60)
     else:
         screen.fill((255, 255, 255))
-        monsters.draw()
-        avonturiers.draw()
+        horde.draw()
         status_bericht = "Verlopen tijd: {:.2f} seconden".format(verlopen_tijd)
         screen.draw.text(status_bericht , midtop=(WIDTH / 2, 0), color="orange")
 
 
 def update():
+    # Update wordt iedere keer dat het scherm weergegeven wordt aangeroepen
     pass
 
 def on_mouse_down(pos, button):
     if button == mouse.LEFT:
-        monsters.check_hit(pos)
-        avonturiers.check_hit(pos)
+        horde.check_hit(pos)
+
