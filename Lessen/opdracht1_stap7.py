@@ -17,8 +17,7 @@ HEIGHT = 480
 # Vervolg opdracht:
 #
 # Het is wat saai dat alle monsters hetzelfde lopen. Kijk eens of je een hogere-orde functie kunt maken om de beslissing
-# te nemen wat het monster doet en geef deze mee aan de constructor
-
+# te nemen wat het monster doet
 
 class Monster(Actor):
     def __init__(self, x: int, y: int):
