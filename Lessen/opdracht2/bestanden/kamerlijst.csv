@@ -1,9 +1,16 @@
 ID,naam,afdeling
-1.01,Kamer 101,Like_Koorts_Kliniek
-1.02,Kamer 102,Hashtag_Hysterie_Centrum
-1.03,Kamer 103,Emoji_Overdosis_Eenheid
-2.05,Kamer 2.05,Comment_Conspiracy_Center
-2.06,Kamer 2.06,Cyber_Clownsyndroom_Wing
-2.07,Kamer 2.07,Cyber_Clownsyndroom_Wing
+L.01,Kamer 1,Like_Koorts_Kliniek
+L.02,Kamer 2,Like_Koorts_Kliniek
+L.03,Kamer 3,Like_Koorts_Kliniek
+L.04,Kamer 4,Like_Koorts_Kliniek
+H.01,Kamer #1,Hashtag_Hysterie_Centrum
+H.02,Kamer #2,Hashtag_Hysterie_Centrum
+H.03,Kamer #3,Hashtag_Hysterie_Centrum
+E.01,Kamer :-),Emoji_Overdosis_Eenheid
+E.02,Kamer (-:,Emoji_Overdosis_Eenheid
+E.03,Kamer O..O,Emoji_Overdosis_Eenheid
+CC.42,Kamer Onbekend,Comment_Conspiracy_Center
+1.01,Eerste Kamer,Cyber_Clownsyndroom_Wing
+1.02,Directie Kamer,Cyber_Clownsyndroom_Wing
 P.01,Poli 1,*
 P.02,Poli 2,*

@@ -1,10 +1,9 @@
 class Kamer(object):
-    __kamernummer: str
-    naam: str
 
-    def __init__(self, kamernummer: str, naam: str):
+    def __init__(self, kamernummer: str, naam: str, afdeling: str):
         self.__kamernummer = kamernummer
         self.naam = naam
+        self.afdeling = afdeling
 
     @property
     def nummer(self):

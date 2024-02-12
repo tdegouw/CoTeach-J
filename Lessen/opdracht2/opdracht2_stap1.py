@@ -3,8 +3,10 @@ from modules.bestandslader import Bestandslader
 
 # Opdracht:
 #
-# Kijk of je de class voor de patient kunt maken
-# en of je de gegevens uit de patienten set kunt inlezen in een nieuw te maken class genaamd patient
+# We willen graag kunnen zoeken met functionele queries. Hiervoor is in het EPD
+# een zoek_patienten stub opgenomen.
+#
+# Maak een pure functie die een functie (of Labda) accepteert en alle nederlandse patienten laat zien
 
 
 def laad_kamers(epd: Epd):
@@ -26,6 +28,7 @@ def laad_patienten(epd: Epd):
     ## Laad je patienten in het ziekenhuis
     while regel is not None:
         print(regel)
+        print(epd.geef_kamer(regel['locatie']))
         regel = lader.geef_regel()
 
     print("patienten geladen: {}".format(epd.geef_patiententotaal()))
