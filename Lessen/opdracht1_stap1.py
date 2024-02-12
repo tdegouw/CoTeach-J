@@ -6,7 +6,10 @@ HEIGHT = 256
 # die je daarvoor kunt gebruiken.
 #
 # Extra opdracht:
+#
 # Kijk of het lukt om het lopen aan / uit te zetten door op de robot te klikken.
+#
+# Doel van de opdracht: Begrijpen hoe je de state van objecten manipuleert
 
 class Robot(Actor):
     def __init__(self):

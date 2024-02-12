@@ -11,6 +11,9 @@ HEIGHT = 256
 #   def __init__(self):
 # om de constructor van de parent aan te roepen gebruik je
 #  super().__init__()
+#
+# Doel van de opdracht: Begrijpen hoe objecten gedrag en data samenbrengen en een eigen state hebben
+#
 
 class Robot(Actor):
     pass

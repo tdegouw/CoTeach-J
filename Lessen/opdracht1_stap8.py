@@ -9,6 +9,13 @@ HEIGHT = 480
 # En om het wat moeilijker te maken willen we graag ook een horde aan
 # avonturiers. De opdracht is om alle monsters op het scherm zo snel mogelijk
 # weg te klikken voordat alle avonturiers weggeklikt zijn (per ongeluk).
+#
+# Kijk wat je nog kunt doen om het rondlopen extra complex te maken, maak
+# de game lastig!
+#
+# Doel van de opdracht: Alles samenvoegen en een game maken
+
+
 
 
 class Monster(Actor):
@@ -23,6 +30,9 @@ class Monster(Actor):
 
     def geef_plaatje(self):
         raise NotImplementedError("methode geef_plaatje is niet geimplementeerd")
+
+    def ga_een_kant_op(self, pixels: int):
+        raise NotImplementedError("methode ga_een_kant_op is niet geimplementeerd")
 
     def neem_stap(self):
         self.step = self.step + 1
@@ -50,61 +60,85 @@ class Monster(Actor):
         self.image = self.geef_plaatje()
         super().draw()
 
+    def ga_links(self, pixels: int):
+        if self.x - pixels < 0:
+            self.x = 0
+        else:
+            self.x = self.x - pixels
+
+    def ga_rechts(self, pixels: int):
+        if self.x + pixels > WIDTH:
+            self.x = WIDTH
+        else:
+            self.x = self.x + pixels
+
+    def ga_omhoog(self, pixels: int):
+        if self.y - pixels < 0:
+            self.y = 0
+        else:
+            self.y = self.y - pixels
+
+    def ga_omlaag(self, pixels: int):
+        if self.y + pixels > HEIGHT:
+            self.y = HEIGHT
+        else:
+            self.y = self.y + pixels
+
+
+class Zombie(Monster):
+
     def ga_een_kant_op(self, pixels: int):
-        # Als we is_kapot zijn doen we niets
-        if self.is_kapot:
-            return
+        # Zombies blijven bewegen ook al zijn ze kapot... het zijn zombies
         # Willekeurig omhoog(1), omlaag(2), links(3) of rechts(4), Nietsdoen (5)
         richting = random.randint(1, 5)
         # Controleer welke richting is gekozen
         if richting == 1:
-            if self.x - pixels < 0:
-                self.x = 0
-            else:
-                self.x = self.x - pixels
+            self.ga_omhoog(pixels)
         elif richting == 2:
-            if self.x + pixels > WIDTH:
-                self.x = WIDTH
-            else:
-                self.x = self.x + pixels
+            self.ga_omlaag(pixels)
         elif richting == 3:
-            if self.y - pixels < 0:
-                self.y = 0
-            else:
-                self.y = self.y - pixels
+            self.ga_links(pixels)
         elif richting == 4:
-            if self.y + pixels > HEIGHT:
-                self.y = HEIGHT
-            else:
-                self.y = self.y + pixels
-
-class Zombie(Monster):
+            self.ga_rechts(pixels)
 
     def geef_plaatje(self):
         if self.is_kapot:
             return 'zombie_hurt'
         if self.is_lopende:
             return 'zombie_walk_' + str(self.step)
-        return'zombie_idle'
+        return 'zombie_idle'
 
 class Robot(Monster):
+
+    def ga_een_kant_op(self, pixels: int):
+        # Als we kapot zijn doen we niets als robot
+        if self.is_kapot:
+            return
+        # Robots besluiten altijd naar de dichtsbijzijnde hoek te gaan tenzij ze daar al zijn.
+        if self.x <= WIDTH / 2 and self.x >= 0:
+            self.x = self.x - pixels
+        if self.x > WIDTH / 2 and self.x <= WIDTH:
+            self.x = self.x + pixels
+        if self.y <= HEIGHT / 2 and self.y >= 0:
+            self.y = self.y - pixels
+        if self.y > HEIGHT / 2 and self.y <= HEIGHT:
+            self.y = self.y + pixels
 
     def geef_plaatje(self):
         if self.is_kapot:
             return 'robot_hurt'
         if self.is_lopende:
             return 'robot_walk_' + str(self.step)
-        return'robot_idle'
-
+        return 'robot_idle'
 
 
 class Horde:
     def __init__(self, aantal_robots: int, aantal_zombies: int):
         self.monsters = list()
         for i in range(1, aantal_robots, 1):
-            self.monsters.append(Robot(i * 100, 56))
+            self.monsters.append(Robot(i * 150, 56))
         for i in range(1, aantal_zombies, 1):
-            self.monsters.append(Zombie(i * 100, 150))
+            self.monsters.append(Zombie(i * 150, 250))
 
     def start(self):
         for monster in self.monsters:
@@ -119,14 +153,13 @@ class Horde:
             if (monster.collidepoint(pos)):
                 monster.is_kapot = True
 
-    def is_iemand_levend(self):
-        iemand_in_leven = False
-        for monster in self.monsters:
-            if not monster.is_kapot:
-                iemand_in_leven = True
+    # class method
+    def is_kapot(self):
+        return all(monster.is_kapot for monster in self.monsters)
 
-        return iemand_in_leven
-
+# globale functie
+def is_kapot(self):
+    return all(monster.is_kapot for monster in self.monsters)
 
 start_tijd = time.time()
 horde = Horde(aantal_robots=5, aantal_zombies=5)
@@ -138,7 +171,8 @@ def draw():
     global definitieve_tijd
     huidige_tijd = time.time()
     verlopen_tijd = (huidige_tijd - start_tijd)
-    if not horde.is_iemand_levend():
+    # Als alles kapot is,
+    if is_kapot(horde):
         if definitieve_tijd == 0:
             definitieve_tijd = verlopen_tijd
         screen.fill((0, 0, 0))

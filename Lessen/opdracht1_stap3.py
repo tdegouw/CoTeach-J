@@ -7,6 +7,16 @@ HEIGHT = 256
 # Kijk eens of je de robot willekeurig over het scherm kunt laten bewegen
 # op het moment dat deze begint te lopen door deze bij iedere stap een
 # beweging naar een willekeurige kant op te laten doen.
+#
+# Gebruik de random package voor het genereren van willekeurige getallen
+#
+# import random
+#
+# daarna kun je in de code random.randint(1, 5) gebruiken om bijvoorbeeld een
+# willekeurig getal tussen de 1 en de 5 te krijgen.
+#
+# Doel van de opdracht: Zien dat objecten zelfsturende elementen zijn en daar ook
+# beslissingen kunnen maken onafhankelijk van elkaar.
 
 class Robot(Actor):
 

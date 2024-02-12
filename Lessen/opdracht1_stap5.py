@@ -3,15 +3,39 @@ import random
 WIDTH = 512
 HEIGHT = 256
 
-# Opdracht 5:
+# Opdracht:
 #
-# 1 Robot is leuk, maar kijk eens of je nu een
-# class kunt maken die meerdere robots maakt en allemaal
+# 2 monsters is leuk maar kijk eens of je nu een
+# class kunt maken die meerdere monsters maakt en allemaal
 # op een andere plek op het scherm zet.
 #
-# Tips: Je kunt een list() gebruiken om robots in op te slaan
+# Tips: Je kunt een list() gebruiken om monsters in op te slaan
 # en door heen te lopen. Kijk eens of je het aantal aan te maken
-# robots als parameter kunt meegeven
+# monsters als parameter kunt meegeven
+#
+# een list maak je door bijvoorbeeld
+#
+# monsters = list()
+#
+# vervolgens voeg je een monster toe aan de list
+#
+# monsters.append(Zombie())
+#
+# Om vervolgens weer door alle monsters heen te lopen kun je de lijst enumereren en id
+# aanroepen om het geheugen adres van het object te zien
+#
+# for monster in monsters:
+#       print(id(monster))
+#       monster.doe_je_ding()
+#
+# Doel van de opdracht: Begrijpen dat objecten altijd doorgegeven worden door
+# middel van verwijzingen naar het geheugen en niet door de waarde door te geven
+#
+# Geavanceerde opdracht:
+#
+# Kijk eens of je muisklik nog werkt. Hoe zou je het oplossen als je nu een voor een
+# de monsters zou willen aanklikken om ze te stoppen?
+#
 
 class Monster(Actor):
 
@@ -104,5 +128,8 @@ def update():
     pass
 
 def on_mouse_down(pos, button):
-    pass
+    if button == mouse.LEFT and robot.collidepoint(pos):
+        robot.wissel_lopen()
 
+    if button == mouse.LEFT and zombie.collidepoint(pos):
+        zombie.wissel_lopen()

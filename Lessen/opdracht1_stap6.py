@@ -3,12 +3,13 @@ import random
 WIDTH = 1024
 HEIGHT = 480
 
-# Opdracht:
+# Opdracht
 #
 # Nu lijkt het al meer op een spel. Geef de monsters nu de mogelijkheid om kapot te gaan. Hiervoor
-# is een plaatje robot_hurt aanwezig.
+# is een plaatje robot_hurt en zombie_hurt aanwezig
 #
-# Kijk eens of je kunt zien of alle monsters kapot zijn
+# Doel van de opdracht:
+#
 
 
 class Monster(Actor):
@@ -96,12 +97,17 @@ class Horde:
 
     def start(self):
         for monster in self.monsters:
+            print(id(monster))
             monster.start_lopen()
 
     def draw(self):
         for monster in self.monsters:
             monster.draw()
 
+    def check_hit(self, pos):
+        for monster in self.monsters:
+            if (monster.collidepoint(pos)):
+                monster.wissel_lopen()
 
 horde = Horde(aantal_robots=5, aantal_zombies=5)
 horde.start()
@@ -117,4 +123,6 @@ def update():
 
 
 def on_mouse_down(pos, button):
-    pass
+    if button == mouse.LEFT:
+        horde.check_hit(pos)
+

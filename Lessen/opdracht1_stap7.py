@@ -7,11 +7,20 @@ HEIGHT = 480
 # Opdracht:
 #
 # Nu is het ook leuk als het spel echt eindigt als je alle robots kapot hebt gemaakt
-# kijk eens of je een eindscherm kunt maken als alle robots weg zijn.
+# kijk eens of je een eindscherm kunt maken als alle robots weg zijn. Doe dit door
+# middel van een globale pure functie die als argument een horde krijgt en als resultaat
+# een boolean om te controleren of er nog een monster in de horde zit die nog niet kapot is.
+#
+# Doel van de opdracht: zien wat pure functies zijn en hoe je deze kunt gebruiken in
+# combinatie met objecten
+#
+# Vervolg opdracht:
+#
+# Het is wat saai dat alle monsters hetzelfde lopen. Kijk eens of je een hogere-orde functie kunt maken om de beslissing
+# te nemen wat het monster doet en geef deze mee aan de constructor
 
 
 class Monster(Actor):
-
     def __init__(self, x: int, y: int):
         self.is_lopende = False
         self.is_kapot = False
@@ -77,33 +86,32 @@ class Monster(Actor):
             else:
                 self.y = self.y + pixels
 
-class Zombie(Monster):
 
+class Zombie(Monster):
     def geef_plaatje(self):
         if self.is_kapot:
-            return 'zombie_hurt'
+            return "zombie_hurt"
         if self.is_lopende:
-            return 'zombie_walk_' + str(self.step)
-        return'zombie_idle'
+            return "zombie_walk_" + str(self.step)
+        return "zombie_idle"
+
 
 class Robot(Monster):
-
     def geef_plaatje(self):
         if self.is_kapot:
-            return 'robot_hurt'
+            return "robot_hurt"
         if self.is_lopende:
-            return 'robot_walk_' + str(self.step)
-        return'robot_idle'
-
+            return "robot_walk_" + str(self.step)
+        return "robot_idle"
 
 
 class Horde:
     def __init__(self, aantal_robots: int, aantal_zombies: int):
         self.monsters = list()
         for i in range(1, aantal_robots, 1):
-            self.monsters.append(Robot(i * 100, 56))
+            self.monsters.append(Robot(i * 150, 56))
         for i in range(1, aantal_zombies, 1):
-            self.monsters.append(Zombie(i * 100, 150))
+            self.monsters.append(Zombie(i * 150, 250))
 
     def start(self):
         for monster in self.monsters:
@@ -115,35 +123,29 @@ class Horde:
 
     def check_hit(self, pos):
         for monster in self.monsters:
-            if (monster.collidepoint(pos)):
+            if monster.collidepoint(pos):
                 monster.is_kapot = True
 
-    def is_iemand_levend(self):
-        iemand_in_leven = False
-        for monster in self.monsters:
-            if not monster.is_kapot:
-                iemand_in_leven = True
-
-        return iemand_in_leven
 
 
 start_tijd = time.time()
 horde = Horde(aantal_robots=5, aantal_zombies=5)
 horde.start()
 
+
 def draw():
     huidige_tijd = time.time()
-    verlopen_tijd = (huidige_tijd - start_tijd)
+    verlopen_tijd = huidige_tijd - start_tijd
     screen.fill((255, 255, 255))
     horde.draw()
     status_bericht = "Verlopen tijd: {:.2f} seconden".format(verlopen_tijd)
-    screen.draw.text(status_bericht , midtop=(WIDTH / 2, 0), color="orange")
+    screen.draw.text(status_bericht, midtop=(WIDTH / 2, 0), color="orange")
 
 
 def update():
     pass
 
+
 def on_mouse_down(pos, button):
     if button == mouse.LEFT:
         horde.check_hit(pos)
-

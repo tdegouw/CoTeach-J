@@ -7,6 +7,8 @@ HEIGHT = 256
 #
 # https://pygame-zero.readthedocs.io/en/stable/builtins.html#clock
 #
+# Doel van de opdracht: Begrijpen dat er naast de standaard loop en method calls
+# ook andere mogelijkheden zijn om de program flow aan te passen. (Asynchroniteit)
 
 class Robot(Actor):
 

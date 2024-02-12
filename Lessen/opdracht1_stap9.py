@@ -17,6 +17,9 @@ class Monster(Actor):
     def geef_plaatje(self):
         raise NotImplementedError("methode geef_plaatje is niet geimplementeerd")
 
+    def ga_een_kant_op(self, pixels: int):
+        raise NotImplementedError("methode ga_een_kant_op is niet geimplementeerd")
+
     def neem_stap(self):
         self.step = self.step + 1
         if self.step > 7:
@@ -43,53 +46,93 @@ class Monster(Actor):
         self.image = self.geef_plaatje()
         super().draw()
 
+    def ga_links(self, pixels: int):
+        if self.x - pixels < 0:
+            self.x = 0
+        else:
+            self.x = self.x - pixels
+
+    def ga_rechts(self, pixels: int):
+        if self.x + pixels > WIDTH:
+            self.x = WIDTH
+        else:
+            self.x = self.x + pixels
+
+    def ga_omhoog(self, pixels: int):
+        if self.y - pixels < 0:
+            self.y = 0
+        else:
+            self.y = self.y - pixels
+
+    def ga_omlaag(self, pixels: int):
+        if self.y + pixels > HEIGHT:
+            self.y = HEIGHT
+        else:
+            self.y = self.y + pixels
+
+class Zombie(Monster):
+
     def ga_een_kant_op(self, pixels: int):
-        # Als we is_kapot zijn doen we niets
-        if self.is_kapot:
-            return
+        # Zombies blijven bewegen ook al zijn ze kapot... het zijn zombies
         # Willekeurig omhoog(1), omlaag(2), links(3) of rechts(4), Nietsdoen (5)
         richting = random.randint(1, 5)
         # Controleer welke richting is gekozen
         if richting == 1:
-            if self.x - pixels < 0:
-                self.x = 0
-            else:
-                self.x = self.x - pixels
+            self.ga_omhoog(pixels)
         elif richting == 2:
-            if self.x + pixels > WIDTH:
-                self.x = WIDTH
-            else:
-                self.x = self.x + pixels
+            self.ga_omlaag(pixels)
         elif richting == 3:
-            if self.y - pixels < 0:
-                self.y = 0
-            else:
-                self.y = self.y - pixels
+            self.ga_links(pixels)
         elif richting == 4:
-            if self.y + pixels > HEIGHT:
-                self.y = HEIGHT
-            else:
-                self.y = self.y + pixels
-
-class Zombie(Monster):
+            self.ga_rechts(pixels)
 
     def geef_plaatje(self):
         if self.is_kapot:
             return 'zombie_hurt'
         if self.is_lopende:
             return 'zombie_walk_' + str(self.step)
-        return'zombie_idle'
+        return 'zombie_idle'
 
 class Robot(Monster):
+
+    def ga_een_kant_op(self, pixels: int):
+        # Als we kapot zijn doen we niets als robot
+        if self.is_kapot:
+            return
+        # Robots besluiten altijd naar de dichtsbijzijnde hoek te gaan tenzij ze daar al zijn.
+        if self.x <= WIDTH / 2 and self.x >= 0:
+            self.x = self.x - pixels
+        if self.x > WIDTH / 2 and self.x <= WIDTH:
+            self.x = self.x + pixels
+        if self.y <= HEIGHT / 2 and self.y >= 0:
+            self.y = self.y - pixels
+        if self.y > HEIGHT / 2 and self.y <= HEIGHT:
+            self.y = self.y + pixels
 
     def geef_plaatje(self):
         if self.is_kapot:
             return 'robot_hurt'
         if self.is_lopende:
             return 'robot_walk_' + str(self.step)
-        return'robot_idle'
+        return 'robot_idle'
 
 class Avonturier(Monster):
+
+    def ga_een_kant_op(self, pixels: int):
+        # Als we kapot zijn doen we niets als Avonturier
+        if self.is_kapot:
+            return
+        # Willekeurig omhoog(1), omlaag(2), links(3) of rechts(4), Nietsdoen (5)
+        richting = random.randint(1, 5)
+        # Controleer welke richting is gekozen
+        if richting == 1:
+            self.ga_omhoog(pixels)
+        elif richting == 2:
+            self.ga_omlaag(pixels)
+        elif richting == 3:
+            self.ga_links(pixels)
+        elif richting == 4:
+            self.ga_rechts(pixels)
 
     def geef_plaatje(self):
         if self.is_kapot:
@@ -114,13 +157,8 @@ class Horde:
             if (monster.collidepoint(pos)):
                 monster.is_kapot = True
 
-    def is_iemand_levend(self):
-        iemand_in_leven = False
-        for monster in self.items:
-            if not monster.is_kapot:
-                iemand_in_leven = True
-
-        return iemand_in_leven
+    def is_alles_kapot(self):
+        return all(monster.is_kapot for monster in self.items)
 
 class HordeMonsters(Horde):
     def __init__(self, aantal_robots: int, aantal_zombies: int):
@@ -159,13 +197,13 @@ def draw():
         bericht = "{:.2f}".format(abs(verlopen_tijd))
         screen.draw.text(bericht , midtop=(WIDTH / 2, HEIGHT / 2), color="green", fontsize=120)
 
-    elif not monsters.is_iemand_levend():
+    elif monsters.is_alles_kapot():
         if definitieve_tijd == 0:
             definitieve_tijd = verlopen_tijd
         screen.fill((0, 255, 0))
         bericht = "Gewonnen in {:.2f} seconden".format(definitieve_tijd)
         screen.draw.text(bericht , midtop=(WIDTH / 2, HEIGHT / 2), color="black", fontsize=60)
-    elif not avonturiers.is_iemand_levend():
+    elif avonturiers.is_alles_kapot():
         if definitieve_tijd == 0:
             definitieve_tijd = verlopen_tijd
         screen.fill((255, 0, 0))

@@ -8,6 +8,9 @@ HEIGHT = 256
 # Naast de robot is er ook een zombie, ook hiervan kun je plaatjes vinden.
 # Kijk eens door inheritance of je de robot class kunt laten overerven van een abstracte
 # base class en daarmee een Zombie en een Robot als class te krijgen.
+#
+# Doel van de opdracht: Kennis maken met (gedeeltelijk) abstracte classes en polymorfisme.
+
 
 class Robot(Actor):
 
@@ -85,5 +88,6 @@ def update():
     pass
 
 def on_mouse_down(pos, button):
-    pass
+    if button == mouse.LEFT and robot.collidepoint(pos):
+        robot.wissel_lopen()
 
