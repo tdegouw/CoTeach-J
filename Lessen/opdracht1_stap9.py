@@ -4,43 +4,39 @@ import time
 WIDTH = 1024
 HEIGHT = 480
 
-class Character(Actor):
+class Monster(Actor):
 
-    def __init__(self, character_type: str, x: int, y: int):
-        self.character_type = character_type
-        self.moving = False
-        self.dood = False
+    def __init__(self, x: int, y: int):
+        self.is_lopende = False
+        self.is_kapot = False
         super().__init__(self.geef_plaatje())
         self.step = 0
         self.x = x
         self.y = y
 
     def geef_plaatje(self):
-        if self.dood:
-            return self.character_type + '_hurt'
-        if self.moving:
-            return self.character_type + '_walk_' + str(self.step)
-        return self.character_type + '_idle'
+        raise NotImplementedError("methode geef_plaatje is niet geimplementeerd")
 
     def neem_stap(self):
         self.step = self.step + 1
         if self.step > 7:
             self.step = 0
         # Zijn we nog aan het lopen? Neem dan over een seconde nog een stap
-        if self.moving:
+        self.ga_een_kant_op(pixels=5)
+        if self.is_lopende:
             clock.schedule_unique(self.neem_stap, 0.1)
 
     def wissel_lopen(self):
-        self.moving = not self.moving
-        if self.moving:
+        self.is_lopende = not self.is_lopende
+        if self.is_lopende:
             self.neem_stap()
 
     def start_lopen(self):
-        if not self.moving:
+        if not self.is_lopende:
             self.wissel_lopen()
 
     def stop_lopen(self):
-        if self.moving:
+        if self.is_lopende:
             self.wissel_lopen()
 
     def draw(self):
@@ -48,8 +44,8 @@ class Character(Actor):
         super().draw()
 
     def ga_een_kant_op(self, pixels: int):
-        # Als we dood zijn doen we niets
-        if self.dood:
+        # Als we is_kapot zijn doen we niets
+        if self.is_kapot:
             return
         # Willekeurig omhoog(1), omlaag(2), links(3) of rechts(4), Nietsdoen (5)
         richting = random.randint(1, 5)
@@ -75,87 +71,78 @@ class Character(Actor):
             else:
                 self.y = self.y + pixels
 
-class Horde():
+class Zombie(Monster):
 
-    def __init__(self, aantal: int, type: str):
-        self.actors = list()
-        for i in range(1, aantal + 1, 1):
-            self.actors.append(Character(type, random.randint(50, WIDTH - 50), random.randint(50, HEIGHT - 50)))
+    def geef_plaatje(self):
+        if self.is_kapot:
+            return 'zombie_hurt'
+        if self.is_lopende:
+            return 'zombie_walk_' + str(self.step)
+        return'zombie_idle'
 
-    def neem_stap(self):
-        for actors in self.actors:
-            actors.ga_een_kant_op(pixels=5)
-        clock.schedule_unique(self.neem_stap, 0.1)
+class Robot(Monster):
+
+    def geef_plaatje(self):
+        if self.is_kapot:
+            return 'robot_hurt'
+        if self.is_lopende:
+            return 'robot_walk_' + str(self.step)
+        return'robot_idle'
+
+class Avonturier(Monster):
+
+    def geef_plaatje(self):
+        if self.is_kapot:
+            return 'adventurer_hurt'
+        if self.is_lopende:
+            return 'adventurer_walk_' + str(self.step)
+        return'adventurer_idle'
+
+
+class Horde:
 
     def start(self):
-        clock.schedule_unique(self.neem_stap, 0.1)
+        for monster in self.items:
+            monster.start_lopen()
 
     def draw(self):
-        for actor in self.actors:
-            actor.start_lopen()
-            actor.draw()
+        for monster in self.items:
+            monster.draw()
 
     def check_hit(self, pos):
-        for actor in self.actors:
-            if (actor.collidepoint(pos)):
-                actor.dood = True
+        for monster in self.items:
+            if (monster.collidepoint(pos)):
+                monster.is_kapot = True
 
     def is_iemand_levend(self):
         iemand_in_leven = False
-        for actor in self.actors:
-            if not actor.dood:
+        for monster in self.items:
+            if not monster.is_kapot:
                 iemand_in_leven = True
 
         return iemand_in_leven
 
-class RobotHorde(Horde):
-    def __init__(self, aantal: int):
-        super().__init__(aantal=aantal, type='robot')
+class HordeMonsters(Horde):
+    def __init__(self, aantal_robots: int, aantal_zombies: int):
+        self.items = list()
+        for i in range(1, aantal_robots, 1):
+            self.items.append(Robot(random.randint(1, WIDTH), random.randint(1, HEIGHT)))
+        for i in range(1, aantal_zombies, 1):
+            self.items.append(Zombie(random.randint(1, WIDTH), random.randint(1, HEIGHT)))
 
-class ZombieHorde(Horde):
-    def __init__(self, aantal: int):
-        super().__init__(aantal=aantal, type='zombie')
+class HordeAvonturiers(Horde):
+    def __init__(self, aantal_avonturiers: int):
+        self.items = list()
+        for i in range(1, aantal_avonturiers, 1):
+            self.items.append(Avonturier(random.randint(1, WIDTH), random.randint(1, HEIGHT)))
 
-class AvonturierHorde(Horde):
-    def __init__(self, aantal: int):
-        super().__init__(aantal=aantal, type='adventurer')
-
-
-class MetaHorde():
-
-    def __init__(self):
-        self.hordes = list()
-
-    def voeg_horde_toe(self, horde: Horde):
-        self.hordes.append(horde)
-
-    def start(self):
-        for horde in self.hordes:
-            horde.start()
-
-    def draw(self):
-        for horde in self.hordes:
-            horde.draw()
-
-    def is_iemand_levend(self):
-        for horde in self.hordes:
-            if horde.is_iemand_levend():
-                return True
-        return False
-
-    def check_hit(self, pos):
-        for horde in self.hordes:
-            horde.check_hit(pos)
 
 start_tijd = time.time()
-meta_horde = MetaHorde()
-meta_horde.voeg_horde_toe(ZombieHorde(3))
-meta_horde.voeg_horde_toe(RobotHorde(5))
-meta_horde.start()
+monsters = HordeMonsters(aantal_robots= 5, aantal_zombies= 5)
+monsters.start()
 
-vluchtenden = MetaHorde()
-vluchtenden.voeg_horde_toe(AvonturierHorde(4))
-vluchtenden.start()
+avonturiers = HordeAvonturiers(aantal_avonturiers= 10)
+avonturiers.start()
 
 definitieve_tijd = 0
 wacht_tijd = 2
@@ -172,13 +159,13 @@ def draw():
         bericht = "{:.2f}".format(abs(verlopen_tijd))
         screen.draw.text(bericht , midtop=(WIDTH / 2, HEIGHT / 2), color="green", fontsize=120)
 
-    elif not meta_horde.is_iemand_levend():
+    elif not monsters.is_iemand_levend():
         if definitieve_tijd == 0:
             definitieve_tijd = verlopen_tijd
         screen.fill((0, 255, 0))
         bericht = "Gewonnen in {:.2f} seconden".format(definitieve_tijd)
         screen.draw.text(bericht , midtop=(WIDTH / 2, HEIGHT / 2), color="black", fontsize=60)
-    elif not vluchtenden.is_iemand_levend():
+    elif not avonturiers.is_iemand_levend():
         if definitieve_tijd == 0:
             definitieve_tijd = verlopen_tijd
         screen.fill((255, 0, 0))
@@ -186,8 +173,8 @@ def draw():
         screen.draw.text(bericht , midtop=(WIDTH / 2, HEIGHT / 3), color="black", fontsize=60)
     else:
         screen.fill((255, 255, 255))
-        meta_horde.draw()
-        vluchtenden.draw()
+        monsters.draw()
+        avonturiers.draw()
         status_bericht = "Verlopen tijd: {:.2f} seconden".format(verlopen_tijd)
         screen.draw.text(status_bericht , midtop=(WIDTH / 2, 0), color="orange")
 
@@ -197,5 +184,5 @@ def update():
 
 def on_mouse_down(pos, button):
     if button == mouse.LEFT:
-        meta_horde.check_hit(pos)
-        vluchtenden.check_hit(pos)
+        monsters.check_hit(pos)
+        avonturiers.check_hit(pos)

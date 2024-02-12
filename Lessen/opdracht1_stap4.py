@@ -1,42 +1,47 @@
 import random
 
-WIDTH = 1024
-HEIGHT = 480
+WIDTH = 512
+HEIGHT = 256
 
-class Character(Actor):
+# Opdracht: Inheritance / Abstract classes
+#
+# Naast de robot is er ook een zombie, ook hiervan kun je plaatjes vinden.
+# Kijk eens door inheritance of je de robot class kunt laten overerven van een abstracte
+# base class en daarmee een Zombie en een Robot als class te krijgen.
 
-    def __init__(self, character_type: str, x: int, y: int):
-        self.character_type = character_type
-        self.moving = False
-        super().__init__(self.geef_plaatje())
+class Robot(Actor):
+
+    def __init__(self):
+        self.is_lopende = False
+        super().__init__(self.geef_plaatje(), (100,45))
         self.step = 0
-        self.x = x
-        self.y = y
+
 
     def geef_plaatje(self):
-        if self.moving:
-            return self.character_type + '_walk_' + str(self.step)
-        return self.character_type + '_idle'
+        if self.is_lopende:
+            return 'robot_walk_' + str(self.step)
+        return 'robot_idle'
 
     def neem_stap(self):
         self.step = self.step + 1
         if self.step > 7:
             self.step = 0
         # Zijn we nog aan het lopen? Neem dan over een seconde nog een stap
-        if self.moving:
+        self.ga_een_kant_op(pixels = 5)
+        if self.is_lopende:
             clock.schedule_unique(self.neem_stap, 0.1)
 
     def wissel_lopen(self):
-        self.moving = not self.moving
-        if self.moving:
+        self.is_lopende = not self.is_lopende
+        if self.is_lopende:
             self.neem_stap()
 
     def start_lopen(self):
-        if not self.moving:
+        if not self.is_lopende:
             self.wissel_lopen()
 
     def stop_lopen(self):
-        if self.moving:
+        if self.is_lopende:
             self.wissel_lopen()
 
     def draw(self):
@@ -68,34 +73,13 @@ class Character(Actor):
             else:
                 self.y = self.y + pixels
 
-class RobotHorde():
 
-    def __init__(self, aantal: int):
-        self.robots = list()
-        for i in range(1, aantal, 1):
-            self.robots.append(Character('robot', i * 100, 56))
-
-    def neem_stap(self):
-        for robot in self.robots:
-            robot.ga_een_kant_op(pixels=5)
-        clock.schedule_unique(self.neem_stap, 0.1)
-
-    def start(self):
-        for robot in self.robots:
-            robot.start_lopen()
-        clock.schedule_unique(self.neem_stap, 0.1)
-
-    def draw(self):
-        for robot in self.robots:
-            robot.draw()
-
-
-horde = RobotHorde(10)
-horde.start()
+robot = Robot()
+robot.start_lopen()
 
 def draw():
     screen.fill((255, 255, 255))
-    horde.draw()
+    robot.draw()
 
 def update():
     pass

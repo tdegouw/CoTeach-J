@@ -1,26 +1,30 @@
-WIDTH = 1024
-HEIGHT = 768
+WIDTH = 512
+HEIGHT = 256
 
-class Character(Actor):
+# https://pygame-zero.readthedocs.io/en/stable/
+#
+# Opdracht: Kijk of het je lukt om door overerving de robot zelf te plaatsen zonder
+# dat je parameters hoeft mee te geven.
+#
+# Tips:
+# de constructor van de class is:
+#   def __init__(self):
+# om de constructor van de parent aan te roepen gebruik je
+#  super().__init__()
+
+class Robot(Actor):
     pass
 
 
-
-male = Actor('male_idle')
-female = Actor('female_idle')
-male.pos = 100, 56
-female.pos = 200, 56
-
-robot = Character('robot_idle')
-robot.pos = 300, 56
+robot = Robot('robot_idle')
+robot.pos = 100, 56
 
 def draw():
     screen.fill((255, 255, 255))
-    male.draw()
-    female.draw()
     robot.draw()
 
 def update():
+    # Deze functie wordt iedere
     pass
 
 def on_mouse_down(pos, button):
