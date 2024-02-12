@@ -2,14 +2,6 @@ from modules.epd import Epd
 from modules.kamer import Kamer
 from modules.bestandslader import Bestandslader
 
-# Opdracht:
-#
-# Het opvragen van records uit het EPD moet gelogd worden maar om nou in iedere
-# functie logging toe te voegen is veel werk
-#
-# Maak een logging decorator (Aspect Oriented Programming/AOP) om logging toe te voegen
-# bij de zoekopdracht
-#
 
 def laad_kamers(epd: Epd):
     print("Start met laden van de kamers")
