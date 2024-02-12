@@ -18,7 +18,7 @@
      - Uitleg over het verbergen van gegevens en functionaliteit binnen een klasse.
   3. **Inheritance (Overerving):**
      - Uitleg over het erven van eigenschappen en gedrag van een ouderklasse naar een kindklasse.
-  4. **Polymorphism (Polymorfie):**
+  4. **Polymorphism (Polymorfisme):**
      - Uitleg over het vermogen van objecten om op verschillende manieren te reageren op dezelfde boodschap.
 
 ## Slide 3: Klassen en Objecten (10 minuten)
@@ -40,7 +40,7 @@ Klassen en Objecten:
 
 ## Opdracht 3: Encapsulatie
 
-- Geef de leerlingen een scenario waarin ze een eenvoudig systeem moeten modelleren, zoals een bibliotheek. Laat hen nadenken over verschillende entiteiten zoals "Patient", "Arts", "Kamer", en "Diagnose", "Behandeling".
+- Geef de leerlingen een scenario waarin ze een eenvoudig systeem moeten modelleren, zoals een EPD. Laat hen nadenken over verschillende entiteiten zoals "Patient", "Arts", "Kamer", en "Diagnose", "Behandeling".
 - Vraag hen om na te denken over welke informatie privé moet worden gehouden (encapsulatie) en welke informatie openbaar toegankelijk is. Bespreek hoe methoden kunnen worden gebruikt om gecontroleerde toegang tot deze informatie te bieden.
 
 ## Afsluiting (10 minuten)
