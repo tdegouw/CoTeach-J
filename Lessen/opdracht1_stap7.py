@@ -16,8 +16,9 @@ HEIGHT = 480
 #
 # Vervolg opdracht:
 #
-# Het is wat saai dat alle monsters hetzelfde lopen. Kijk eens of je een hogere-orde functie kunt maken om de beslissing
-# te nemen wat het monster doet
+# Het is wat saai dat alle monsters hetzelfde lopen. Kijk eens of je de robots naar de
+# rand van het scherm kunt laten lopen en op een willekeurige plek in het speelveld kunt
+# plaatsen als deze daar aangekomen is.
 
 class Monster(Actor):
     def __init__(self, x: int, y: int):

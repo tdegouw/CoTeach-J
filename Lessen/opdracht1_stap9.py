@@ -99,15 +99,20 @@ class Robot(Monster):
         # Als we kapot zijn doen we niets als robot
         if self.is_kapot:
             return
-        # Robots besluiten altijd naar de dichtsbijzijnde hoek te gaan tenzij ze daar al zijn.
-        if self.x <= WIDTH / 2 and self.x >= 0:
-            self.x = self.x - pixels
-        if self.x > WIDTH / 2 and self.x <= WIDTH:
-            self.x = self.x + pixels
-        if self.y <= HEIGHT / 2 and self.y >= 0:
-            self.y = self.y - pixels
-        if self.y > HEIGHT / 2 and self.y <= HEIGHT:
-            self.y = self.y + pixels
+        # Robots besluiten altijd naar de dichtsbijzijnde hoek te gaan tenzij ze daar al zijn en anders teleporten ze weer naar het midden
+        if self.x <= WIDTH / 2 and self.x > 0:
+            self.ga_omhoog(pixels)
+        if self.x > WIDTH / 2 and self.x < WIDTH:
+            self.ga_omlaag(pixels)
+        if self.y <= HEIGHT / 2 and self.y > 0:
+            self.ga_links(pixels)
+        if self.y > HEIGHT / 2 and self.y < HEIGHT:
+             self.ga_rechts(pixels)
+
+        # Een robot aan de rand teleporteert naar een willekeurige locatie
+        if(self.x <= 0 or self.x >= WIDTH or self.y <= 0 or self.y >= HEIGHT):
+            self.x = random.randint(50, WIDTH - 50)
+            self.y = random.randint(50, HEIGHT - 50)
 
     def geef_plaatje(self):
         if self.is_kapot:
