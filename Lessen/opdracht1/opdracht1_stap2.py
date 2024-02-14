@@ -1,3 +1,5 @@
+from print_object import print_object
+
 WIDTH = 512
 HEIGHT = 256
 
@@ -37,7 +39,7 @@ class Robot(Actor):
         super().draw()
 
 robot = Robot()
-
+print_object(robot)
 
 def draw():
     screen.fill((255, 255, 255))

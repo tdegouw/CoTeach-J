@@ -1,3 +1,4 @@
+from print_object import print_object
 import random
 import time
 
@@ -93,6 +94,20 @@ class Zombie(Monster):
             return 'zombie_walk_' + str(self.step)
         return 'zombie_idle'
 
+    def herrijs(self):
+        self.is_kapot = False
+
+    @property
+    def is_kapot(self):
+        return self._is_kapot
+
+    @is_kapot.setter
+    def is_kapot(self, value):
+        self._is_kapot = value
+        # een kapotte zombie start weer over 10 seconden
+        clock.schedule_unique(self.herrijs, 10)
+
+
 class Robot(Monster):
 
     def ga_een_kant_op(self, pixels: int):
@@ -183,9 +198,11 @@ class HordeAvonturiers(Horde):
 start_tijd = time.time()
 monsters = HordeMonsters(aantal_robots= 5, aantal_zombies= 5)
 monsters.start()
+print_object(monsters)
 
 avonturiers = HordeAvonturiers(aantal_avonturiers= 10)
 avonturiers.start()
+
 
 definitieve_tijd = 0
 wacht_tijd = 1

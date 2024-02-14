@@ -1,3 +1,4 @@
+from print_object import print_object
 import random
 import time
 
@@ -12,6 +13,10 @@ HEIGHT = 480
 #
 # Kijk wat je nog kunt doen om het rondlopen extra complex te maken, maak
 # de game lastig!
+#
+# Ideen:
+# - Laat zombies blijven bewegen als ze kapot zijn
+# - Laat ze na een timer weer tot leven komen
 #
 # Doel van de opdracht: Alles samenvoegen en een game maken
 
@@ -148,6 +153,7 @@ class Horde:
     def start(self):
         for monster in self.monsters:
             monster.start_lopen()
+            print_object(monster)
 
     def draw(self):
         for monster in self.monsters:

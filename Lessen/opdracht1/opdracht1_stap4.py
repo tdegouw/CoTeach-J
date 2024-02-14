@@ -1,3 +1,4 @@
+from print_object import print_object
 import random
 
 WIDTH = 512
@@ -79,6 +80,7 @@ class Robot(Actor):
 
 robot = Robot()
 robot.start_lopen()
+print_object(robot)
 
 def draw():
     screen.fill((255, 255, 255))

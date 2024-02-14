@@ -1,3 +1,4 @@
+from print_object import print_object
 import random
 
 WIDTH = 512
@@ -115,9 +116,11 @@ class Robot(Monster):
 
 robot = Robot()
 robot.start_lopen()
+print_object(robot)
 
 zombie = Zombie()
 zombie.start_lopen()
+print_object(zombie)
 
 def draw():
     screen.fill((255, 255, 255))

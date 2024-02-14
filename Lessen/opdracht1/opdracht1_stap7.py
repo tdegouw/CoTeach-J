@@ -1,3 +1,4 @@
+from print_object import print_object
 import random
 import time
 
@@ -136,7 +137,7 @@ class Horde:
 start_tijd = time.time()
 horde = Horde(aantal_robots=5, aantal_zombies=5)
 horde.start()
-
+print_object(horde)
 
 def draw():
     huidige_tijd = time.time()

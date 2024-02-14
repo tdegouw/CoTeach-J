@@ -1,3 +1,4 @@
+from print_object import print_object
 import random
 
 WIDTH = 1024
@@ -99,7 +100,7 @@ class Horde:
 
     def start(self):
         for monster in self.monsters:
-            print(id(monster))
+            # print_object(monster)
             monster.start_lopen()
 
     def draw(self):
@@ -113,6 +114,7 @@ class Horde:
 
 horde = Horde(aantal_robots=5, aantal_zombies=5)
 horde.start()
+print_object(horde)
 
 
 def draw():
