@@ -36,6 +36,8 @@ class Robot(Actor):
         self.step = self.step + 1
         if self.step > 7:
             self.step = 0
+        # Als we lopende zijn, neem dan over 0.1 seconde weer een stap.
+        # hierdoor creeren we een eigen loop loop los van de alemene programma loop
         if self.is_lopende:
             clock.schedule_unique(self.neem_stap, 0.1)
 
@@ -53,13 +55,17 @@ print_object(robot)
 
 
 def draw():
+    # Draw wordt iedere keer dat het scherm getekend moet worden aangeroepen. Eerst maken we het scherm leeg
     screen.fill((255, 255, 255))
+    # En daarna vragen we aan de robot om zichzelf te tekenen op het scherm
     robot.draw()
 
 def update():
     pass
 
 def on_mouse_down(pos, button):
+    # Als een muisknop ingerdukt wordt, en het is de linker muisknop EN de positie van de muis
+    # botst met de robot wissel dan van lopen.
     if button == mouse.LEFT and robot.collidepoint(pos):
         robot.wissel_lopen()
 

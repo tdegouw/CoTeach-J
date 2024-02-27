@@ -26,21 +26,27 @@ HEIGHT = 256
 #
 # Handleiding: https://pygame-zero.readthedocs.io/en/stable/builtins.html#actors
 #
-# Doel van de opdracht: Begrijpen hoe objecten gedrag en data samenbrengen en een eigen state hebben
+# Doel van de opdracht:
+# - Begrijpen hoe objecten gedrag en data samenbrengen en een eigen state hebben
+# - Zien hoe constructor overloading werkt
 #
 
 class Robot(Actor):
     pass
 
 
+# Een actor aanmaken volgens de handleiding van PyGame Zero
 robot = Actor('robot_idle')
 robot.pos = 100, 56
+
+# Om te zien hoe het object er in het geheugen uitziet
 print_object(robot, True, True, False)
 
 
 def draw():
-    # Draw wordt iedere keer dat het scherm getekend moet worden aangeroepen
+    # Draw wordt iedere keer dat het scherm getekend moet worden aangeroepen. Eerst maken we het scherm leeg
     screen.fill((255, 255, 255))
+    # En daarna vragen we aan de robot om zichzelf te tekenen op het scherm
     robot.draw()
 
 def update():

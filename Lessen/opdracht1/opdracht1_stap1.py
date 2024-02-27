@@ -25,17 +25,24 @@ HEIGHT = 256
 # Leestip: https://pygame-zero.readthedocs.io/en/stable/hooks.html#event-handling-hooks
 # en zoek eens op 'collidepoint' in de documentatie.
 #
-# Doel van de opdracht: Begrijpen hoe je de state van objecten manipuleert
+# Doel van de opdracht:
+# - Begrijpen hoe je de state van objecten manipuleert
 
 class Robot(Actor):
     def __init__(self):
+        # Omdat we de constructor overloaden moeten we de parent constructor ook aanroepen.
         super().__init__('robot_idle', (100,56))
 
+# We maken een nieuwe variabele 'robot' en maken dit een Robot (nieuwe instantie van de Robot class)
 robot = Robot()
+
+# Daarna kijken we hoe deze er uit ziet
 print_object(robot)
 
 def draw():
+    # Draw wordt iedere keer dat het scherm getekend moet worden aangeroepen. Eerst maken we het scherm leeg
     screen.fill((255, 255, 255))
+    # En daarna vragen we aan de robot om zichzelf te tekenen op het scherm
     robot.draw()
 
 def update():
