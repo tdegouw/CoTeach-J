@@ -31,17 +31,21 @@ def laad_patienten(epd: Epd):
 def check_afdeling(kamer):
     return kamer.afdeling == 'Emoji_Overdosis_Eenheid'
 
+
 def log_aanroep(func):
     def wrapper(*args, **kwargs):
         print(f"Function {func.__name__} aangeroepen met argumenten: {args}, {kwargs}")
         return func(*args, **kwargs)
+
     return wrapper
+
 
 def zoek_kamers(epd: Epd):
     # Kamers met een named functie
     print("Kamers in: Emoji_Overdosis_Eenheid")
     for item in epd.zoek_kamers(check_afdeling):
         print(item.naam)
+
 
 @log_aanroep
 def zoek_kamers2(epd: Epd):
@@ -57,7 +61,6 @@ def start_epd():
     laad_patienten(epd=mijn_epd)
     zoek_kamers(epd=mijn_epd)
     zoek_kamers2(epd=mijn_epd)
-
 
 
 if __name__ == "__main__":
