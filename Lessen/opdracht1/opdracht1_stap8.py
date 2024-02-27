@@ -143,12 +143,9 @@ class Robot(Monster):
 
 
 class Horde:
-    def __init__(self, aantal_robots: int, aantal_zombies: int):
-        self.monsters = list()
-        for i in range(1, aantal_robots, 1):
-            self.monsters.append(Robot(i * 150, 56))
-        for i in range(1, aantal_zombies, 1):
-            self.monsters.append(Zombie(i * 150, 250))
+    def __init__(self, factory):
+        self.monsters = factory
+
 
     def start(self):
         for monster in self.monsters:
@@ -177,9 +174,18 @@ def decide_movement(movement_algorithm):
         return movement_algorithm(monster, target_x, target_y)
     return wrapper
 
+def monster_generator(aantal: int):
+    monsterlist = list()
+    for i in range(aantal):
+        # Nu gaan we willekeurig een zombie of robot toevoegen, afhankelijk of we een 0 of 1 krijgen
+        if random.randint(0,1) == 0:
+            monsterlist.append(Robot(i * 150, 56))
+        else:
+            monsterlist.append(Zombie(i * 150, 250))
+    return monsterlist
 
 start_tijd = time.time()
-horde = Horde(aantal_robots=5, aantal_zombies=5)
+horde = Horde(monster_generator(10))
 horde.start()
 
 definitieve_tijd = 0

@@ -8,11 +8,11 @@ HEIGHT = 256
 #
 # 2 monsters is leuk maar kijk eens of je nu een
 # class kunt maken die meerdere monsters maakt en allemaal
-# op een andere plek op het scherm zet.
+# op een andere plek op het scherm zet. Noem deze class een 'Horde' of 'Zwerm'.
 #
 # Tips: Je kunt een list() gebruiken om monsters in op te slaan
 # en door heen te lopen. Kijk eens of je het aantal aan te maken
-# monsters als parameter kunt meegeven
+# zombies en robots als parameter kunt meegeven
 #
 # een list maak je door bijvoorbeeld
 #

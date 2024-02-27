@@ -12,8 +12,15 @@ HEIGHT = 480
 # middel van een globale pure functie die als argument een horde krijgt en als resultaat
 # een boolean om te controleren of er nog een monster in de horde zit die nog niet kapot is.
 #
-# Doel van de opdracht: zien wat pure functies zijn en hoe je deze kunt gebruiken in
-# combinatie met objecten
+#
+# Doel van de opdracht:
+# - zien wat pure functies zijn en hoe je deze kunt gebruiken incombinatie met objecten
+# - zien wat inversion of Control (IoC) is
+#
+# Extra opdracht:
+#
+# Dat de horde aangemaakt wordt met 2 parameters is natuurlijk raar want dat is niet zo uitbereidbaar. Probeer het
+# zo te maken dat je een (al dan niet pure) functie meegeeft die monsters aanmaakt.
 #
 # Vervolg opdracht:
 #
