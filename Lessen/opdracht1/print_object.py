@@ -1,5 +1,4 @@
 from pprint import pprint
-import inspect
 
 def print_object(obj, toon_constanten: bool = False, toon_private: bool = False, toon_hidden: bool = False):
     # Controleren of het object een ingebouwd datatype is
@@ -32,14 +31,14 @@ def print_object(obj, toon_constanten: bool = False, toon_private: bool = False,
             # Controleer of de waarde een methode is
             if attr.startswith("__"):
                 if callable(value):
-                     hidden.append(f"{attr}: <method>")
+                    hidden.append(f"{attr}: <method>")
                 else:
-                     hidden.append(f"{attr}: {value}")
+                    hidden.append(f"{attr}: {value}")
             elif attr.startswith("_"):
                 if callable(value):
-                     private_methods.append(f"{attr}: <method>")
+                    private_methods.append(f"{attr}: <method>")
                 else:
-                     private_variables.append(f"{attr}: {value}")
+                    private_variables.append(f"{attr}: {value}")
             elif callable(value):
                 public_methods.append(f"{attr}: <method>")
             elif(attr == attr.upper()):
@@ -47,6 +46,11 @@ def print_object(obj, toon_constanten: bool = False, toon_private: bool = False,
             else:
                 public_variables.append(f"{attr}: {value}")
 
+        if toon_hidden:
+            print("[Hidden]")
+            hidden.sort()
+            for item in hidden:
+                print(f"\t{item}")
         if toon_constanten:
             print("[Constants]")
             constants.sort()
