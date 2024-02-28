@@ -61,5 +61,6 @@ def update():
     pass
 
 def on_mouse_down(pos, button):
-    # Als iemand
+    # Als iemand de muis klikt in het scherm wordt deze functie async aangeroepen met de button die geklikt is en de positie
+    # waar geklikt is in het scherm. (X, Y)
     pass
