@@ -9,6 +9,13 @@ HEIGHT = 256
 # Link naar de mu editor:
 # - https://codewith.mu/
 #
+# Als je Thonny gebruikt moet je eerst de PGZero module installeren
+# - tools -> manage plugins -> zoek naar PGZero
+#
+# En daarna PGZero modus aanzetten
+# - Run -> PyGame Zero Mode
+#
+#
 # Start met het downloaden van de hele repository, anders mis je de plaatjes.
 #
 # Opdracht: Kijk of het je lukt om door overerving de robot zelf te plaatsen zonder
