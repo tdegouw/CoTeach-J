@@ -10,7 +10,7 @@ HEIGHT = 256
 # - https://codewith.mu/
 #
 # Als je Thonny gebruikt moet je eerst de PGZero module installeren
-# - tools -> manage plugins -> zoek naar PGZero
+# - tools -> manage packages -> zoek naar PGZero
 #
 # En daarna PGZero modus aanzetten
 # - Run -> PyGame Zero Mode
