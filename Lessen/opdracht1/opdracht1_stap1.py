@@ -29,10 +29,12 @@ HEIGHT = 256
 # - Begrijpen hoe je de state van objecten manipuleert
 
 class Robot(Actor):
+    _IDLE_IMAGE = 'robot_idle'
+    
     def __init__(self):
         # Omdat we de constructor overloaden moeten we de parent constructor ook aanroepen.
-        super().__init__('robot_idle', (100,56))
-
+        super().__init__(self._IDLE_IMAGE, (100,56))
+        
 # We maken een nieuwe variabele 'robot' en maken dit een Robot (nieuwe instantie van de Robot class)
 robot = Robot()
 

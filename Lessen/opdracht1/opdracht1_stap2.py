@@ -18,6 +18,7 @@ HEIGHT = 256
 # Een inkijkje in method overloading
 
 class Robot(Actor):
+    _IDLE_IMAGE = 'robot_idle'
 
     def __init__(self):
         self.is_lopende = False
@@ -32,7 +33,7 @@ class Robot(Actor):
             if self.step > 7:
                 self.step = 0
             return 'robot_walk_' + str(self.step)
-        return 'robot_idle'
+        return self._IDLE_IMAGE
 
     def wissel_lopen(self):
         self.is_lopende = not self.is_lopende

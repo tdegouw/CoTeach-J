@@ -101,7 +101,7 @@ class Monster(Actor):
                 self.y = self.y + pixels
 
 class Zombie(Monster):
-
+        
     def geef_plaatje(self):
         if self.is_lopende:
             return 'zombie_walk_' + str(self.step)
@@ -120,6 +120,7 @@ print_object(robot)
 
 zombie = Zombie()
 zombie.start_lopen()
+zombie.x = 200
 print_object(zombie)
 
 def draw():

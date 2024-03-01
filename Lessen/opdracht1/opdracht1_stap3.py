@@ -19,8 +19,15 @@ HEIGHT = 256
 #
 # Doel van de opdracht: Zien dat objecten zelfsturende elementen zijn en daar ook
 # beslissingen kunnen maken onafhankelijk van elkaar.
+#
+# Extra opdracht:
+# Kijk eens of je de X en Y optioneel mee kunt geven
+#
+# Extra opdracht:
+# Probeer eens een tweede robot aan te maken
 
 class Robot(Actor):
+    _IDLE_IMAGE = 'robot_idle'
 
     def __init__(self):
         self.is_lopende = False
@@ -30,7 +37,7 @@ class Robot(Actor):
     def geef_plaatje(self):
         if self.is_lopende:
             return 'robot_walk_' + str(self.step)
-        return 'robot_idle'
+        return self._IDLE_IMAGE
 
     def neem_stap(self):
         self.step = self.step + 1

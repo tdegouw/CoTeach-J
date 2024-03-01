@@ -14,17 +14,18 @@ HEIGHT = 256
 
 
 class Robot(Actor):
+    _IDLE_IMAGE = 'robot_idle'
 
-    def __init__(self):
+    def __init__(self, x: int = 100):
         self.is_lopende = False
-        super().__init__(self.geef_plaatje(), (100,45))
+        super().__init__(self.geef_plaatje(), (x,45))
         self.step = 0
 
 
     def geef_plaatje(self):
         if self.is_lopende:
             return 'robot_walk_' + str(self.step)
-        return 'robot_idle'
+        return self._IDLE_IMAGE
 
     def neem_stap(self):
         self.step = self.step + 1
@@ -79,12 +80,18 @@ class Robot(Actor):
 
 
 robot = Robot()
-robot.start_lopen()
+robot2 = Robot(200)
+
+# Probeer een van de onderstaanden te uncommenten en kijk wat er gebeurt als je het lopen stopt.
+#robot2._IDLE_IMAGE = 'zombie_idle'
+Robot._IDLE_IMAGE = 'zombie_idle'
+
 print_object(robot)
 
 def draw():
     screen.fill((255, 255, 255))
     robot.draw()
+    robot2.draw()
 
 def update():
     pass
@@ -92,4 +99,6 @@ def update():
 def on_mouse_down(pos, button):
     if button == mouse.LEFT and robot.collidepoint(pos):
         robot.wissel_lopen()
-
+        
+    if button == mouse.LEFT and robot2.collidepoint(pos):
+        robot2.wissel_lopen()
