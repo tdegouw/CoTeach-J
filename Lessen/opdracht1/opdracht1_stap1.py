@@ -28,6 +28,7 @@ HEIGHT = 256
 # Doel van de opdracht:
 # - Begrijpen hoe je de state van objecten manipuleert
 
+
 class Robot(Actor):
     _IDLE_IMAGE = 'robot_idle'
     

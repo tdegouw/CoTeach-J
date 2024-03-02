@@ -1,4 +1,5 @@
 from print_object import print_object
+import time
 
 WIDTH = 512
 HEIGHT = 256
@@ -35,8 +36,8 @@ HEIGHT = 256
 #
 # Doel van de opdracht:
 # - Begrijpen hoe objecten gedrag en data samenbrengen en een eigen state hebben
-# - Zien hoe constructor overloading werkt
-#
+# - Zien hoe een constructor werkt
+# - Zien wat pointers zijn
 
 class Robot(Actor):
     pass
@@ -45,9 +46,12 @@ class Robot(Actor):
 # Een actor aanmaken volgens de handleiding van PyGame Zero
 robot = Actor('robot_idle')
 robot.pos = 100, 56
+# Om de verwijzing te zien
+print("Onze robot bij het aanmaken id {}".format(id(robot)))
+
 
 # Om te zien hoe het object er in het geheugen uitziet
-print_object(robot, True, True, False)
+#print_object(robot, True, True, False)
 
 
 def draw():
@@ -63,4 +67,11 @@ def update():
 def on_mouse_down(pos, button):
     # Als iemand de muis klikt in het scherm wordt deze functie async aangeroepen met de button die geklikt is en de positie
     # waar geklikt is in het scherm. (X, Y)
-    pass
+
+    # We gaan nu opnieuw de global robot variable opnieuw aanmaken
+    global robot
+    # Probeer het eens zonder global: Waarom gebeurt er nu iets anders?
+    robot = Actor('robot_idle')
+    robot.pos = 400, 56
+    print("Onze robot heeft nu id {}".format(id(robot)))
+

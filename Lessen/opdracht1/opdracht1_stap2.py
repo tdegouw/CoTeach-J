@@ -15,7 +15,6 @@ HEIGHT = 256
 #
 # Begrijpen dat er naast de standaard loop en method calls
 # ook andere mogelijkheden zijn om de program flow aan te passen. (Asynchroniteit)
-# Een inkijkje in method overloading
 
 class Robot(Actor):
     _IDLE_IMAGE = 'robot_idle'

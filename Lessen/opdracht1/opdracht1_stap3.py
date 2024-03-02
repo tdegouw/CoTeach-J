@@ -17,14 +17,21 @@ HEIGHT = 256
 # daarna kun je in de code random.randint(1, 5) gebruiken om bijvoorbeeld een
 # willekeurig getal tussen de 1 en de 5 te krijgen.
 #
-# Doel van de opdracht: Zien dat objecten zelfsturende elementen zijn en daar ook
-# beslissingen kunnen maken onafhankelijk van elkaar.
-#
 # Extra opdracht:
 # Kijk eens of je de X en Y optioneel mee kunt geven
 #
 # Extra opdracht:
 # Probeer eens een tweede robot aan te maken
+#
+# Extra opdracht:
+# Maak eens een class variable aan en gebruik die in je robot. Kijk eens wat er gebeurt als je die class variable aanpast of
+# wat er gebeurt als je de instance variable aanpast.
+#
+#
+# Doel van de opdracht:
+# - Zien dat objecten zelfsturende elementen zijn en daar ook beslissingen kunnen maken onafhankelijk van elkaar.
+# - Bij de extra opdracht zien wat variable scopes zijn.
+
 
 class Robot(Actor):
     _IDLE_IMAGE = 'robot_idle'
