@@ -40,8 +40,6 @@ HEIGHT = 256
 # - Zien hoe een constructor werkt
 # - Zien wat pointers zijn
 
-class Robot(Actor):
-    pass
 
 # Een actor aanmaken volgens de handleiding van PyGame Zero
 robot = Actor('robot_idle')
