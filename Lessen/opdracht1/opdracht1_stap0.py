@@ -20,31 +20,45 @@ HEIGHT = 256
 #
 # Start met het downloaden van de hele repository, anders mis je de plaatjes.
 #
-# Opdracht:
-# - Kijk of je een object van het type 'Actor' aan kunt maken met de kennis die je nu hebt
-# - gebruik een van de plaatjes in de 'images' folder, je hoeft alleen de bestandsnaam te geven zonder .jpg
+# Opdracht: Kijk of het je lukt om door overerving de robot zelf te plaatsen zonder
+# dat je parameters hoeft mee te geven. Dus zorg dat je in onderstaand programma
+# de class Robot gaat gebruiken en niet langer de Actor class.
 #
-# Vervolgopdracht:
+# Tips:
+# de constructor van de class is:
+#   def __init__(self):
 #
-# - Kijk of je de X en Y positie van de actor ook kunt zetten
+# om de constructor van de parent aan te roepen gebruik je
+#  super().__init__(...)
 #
 # print_object kun je gebruiken om meer te weten te komen over een object.
 #
 # Handleiding: https://pygame-zero.readthedocs.io/en/stable/builtins.html#actors
 #
 # Doel van de opdracht:
-# - De eerste verkenning met objecten, ze aanmaken en de state manipuleren
-#
-# TODO: Typ hieronder je code
+# - Begrijpen hoe objecten gedrag en data samenbrengen en een eigen state hebben
+# - Zien hoe een constructor werkt
+# - Zien wat pointers zijn
+
+class Robot(Actor):
+    pass
+
+# Een actor aanmaken volgens de handleiding van PyGame Zero
+robot = Actor('robot_idle')
+robot.pos = 100, 56
+# Om de verwijzing te zien
+print("Onze robot bij het aanmaken id {}".format(id(robot)))
+
 
 # Om te zien hoe het object er in het geheugen uitziet
-#print_object(mijn_object, True, True, False)
+#print_object(robot, True, True, False)
+
 
 def draw():
     # Draw wordt iedere keer dat het scherm getekend moet worden aangeroepen. Eerst maken we het scherm leeg
     screen.fill((255, 255, 255))
-    # TODO: Hier moet je nog je nieuwe object zichzelf laten tekenen door de .draw method aan te roepen.
-
+    # En daarna vragen we aan de robot om zichzelf te tekenen op het scherm
+    robot.draw()
 
 def update():
     # Update wordt iedere keer dat het scherm weergegeven wordt aangeroepen
