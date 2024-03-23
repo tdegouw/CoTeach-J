@@ -53,12 +53,4 @@ def update():
 def on_mouse_down(pos, button):
     # Als iemand de muis klikt in het scherm wordt deze functie async aangeroepen met de button die geklikt is en de positie
     # waar geklikt is in het scherm. (X, Y)
-
-    # We gaan nu opnieuw de global robot variable opnieuw aanmaken
-    global robot
-    # Probeer het eens zonder global: Waarom gebeurt er nu iets anders?
-    robot = Actor('robot_idle')
-    robot.pos = 400, 56
-    print("Onze robot heeft nu id {}".format(id(robot)))
-
-pgzrun.go()
+    pass
